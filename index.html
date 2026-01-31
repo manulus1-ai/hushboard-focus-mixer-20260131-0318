@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b132b" />
+  <title>Hushboard — Focus Mixer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Hushboard</h1>
+        <p class="subtitle">A blueprint-style focus mixer with saved scenes + shareable links.</p>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button id="btnPower" class="btn primary" type="button">
+        <span class="btn-ic" aria-hidden="true">⏻</span>
+        <span id="powerLabel">Start audio</span>
+      </button>
+      <button id="btnNew" class="btn" type="button" title="Reset to defaults">Reset</button>
+      <button id="btnHelp" class="btn" type="button" aria-expanded="false">Help</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="panel" aria-labelledby="mixerTitle">
+      <div class="panel-h">
+        <h2 id="mixerTitle">Mixer</h2>
+        <div class="panel-h-actions">
+          <label class="chip">
+            <span>Master</span>
+            <input id="master" type="range" min="0" max="1" step="0.01" value="0.6" />
+          </label>
+          <button id="btnSave" class="btn" type="button">Save scene</button>
+          <button id="btnShare" class="btn" type="button">Copy link</button>
+        </div>
+      </div>
+
+      <div id="channels" class="channels" role="list"></div>
+
+      <div class="hint">
+        Tip: audio will only start after a user gesture. If it’s silent, press <b>Start audio</b> again.
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="timerTitle">
+      <div class="panel-h">
+        <h2 id="timerTitle">Session timer</h2>
+        <div class="panel-h-actions">
+          <button class="btn" id="btnStartTimer" type="button">Start</button>
+          <button class="btn" id="btnStopTimer" type="button">Stop</button>
+        </div>
+      </div>
+
+      <div class="timer">
+        <div class="timer-row">
+          <div class="timer-big" id="timerReadout">—:—</div>
+          <div class="timer-meta" id="timerMeta">No timer running</div>
+        </div>
+
+        <div class="timer-presets" role="group" aria-label="Timer presets">
+          <button class="btn chip" data-min="10" type="button">10m</button>
+          <button class="btn chip" data-min="25" type="button">25m</button>
+          <button class="btn chip" data-min="45" type="button">45m</button>
+          <button class="btn chip" data-min="60" type="button">60m</button>
+        </div>
+
+        <details class="details">
+          <summary>Advanced</summary>
+          <div class="row">
+            <label class="field">
+              <span>Duration (minutes)</span>
+              <input id="timerMinutes" type="number" min="1" max="240" step="1" value="25" />
+            </label>
+            <label class="field">
+              <span>Fade-out (seconds)</span>
+              <input id="fadeSeconds" type="number" min="0" max="120" step="1" value="10" />
+            </label>
+          </div>
+          <label class="field">
+            <span>End behavior</span>
+            <select id="endBehavior">
+              <option value="fade">Fade to silence</option>
+              <option value="pause">Stop audio</option>
+              <option value="keep">Keep playing</option>
+            </select>
+          </label>
+        </details>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="scenesTitle">
+      <div class="panel-h">
+        <h2 id="scenesTitle">Scenes</h2>
+        <div class="panel-h-actions">
+          <button id="btnExport" class="btn" type="button">Export JSON</button>
+          <label class="btn file">
+            Import JSON
+            <input id="fileImport" type="file" accept="application/json" />
+          </label>
+        </div>
+      </div>
+
+      <div id="scenes" class="scenes"></div>
+    </section>
+
+    <section id="helpPanel" class="panel help" hidden>
+      <div class="panel-h">
+        <h2>Help</h2>
+      </div>
+      <div class="help-body">
+        <ul>
+          <li><b>Save scene</b> stores your current mix locally.</li>
+          <li><b>Copy link</b> creates a permalink containing your current scene (no server).</li>
+          <li><b>Export/Import</b> lets you move scenes between devices.</li>
+          <li>For best results, use headphones for the binaural channel.</li>
+        </ul>
+        <p class="tiny">No analytics. No network calls. Everything stays in your browser.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="tiny">Hushboard • built as a tiny static app</span>
+    <span class="tiny">—</span>
+    <a class="tiny" href="https://github.com" target="_blank" rel="noreferrer">GitHub Pages</a>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
